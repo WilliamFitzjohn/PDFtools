@@ -11,12 +11,12 @@ if [ $LOCAL = $REMOTE ]; then
     echo "$(date --utc +%FT%TZ): No changes detected in git"
 elif [ $LOCAL = $BASE ]; then
     BUILD_VERSION=$(git rev-parse HEAD)
-    echo "$(date --utc +% FT%TZ): Changes detected, deploying new version: $BUILD_VERSION"
-    ./scripts/deploy.sh
+    echo "$(date --utc +%FT%TZ): Changes detected, deploying new version: $BUILD_VERSION"
+    ./scripts/docker-redeploy.sh
 elif [ $REMOTE = $BASE ]; then
     echo "$(date --utc +%FT%TZ): Local changes detected, stashing"
     git stash
-    ./scripts/deploy.sh
+    ./scripts/docker-redeploy.sh
 else
     echo "$(date --utc +% FT%TZ): Git is diverged, this is unexpected."
 fi
