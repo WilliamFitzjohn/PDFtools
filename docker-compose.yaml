@@ -1,0 +1,14 @@
+version: "3"
+services:
+  api:
+    build: ./src/backend
+    ports:
+      - "8087:80"
+    restart: always
+    environment:
+      - BASE_URL=/api
+    healthcheck:
+      test: curl --fail http://localhost/api/ping || exit 1
+      interval: 30s
+      retries: 5
+      timeout: 10s

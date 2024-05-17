@@ -4,6 +4,9 @@ FROM python:3.9-slim
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
 
+# Install curl
+RUN apt-get update && apt-get install -y curl
+
 # Create and set the working directory
 WORKDIR /app
 

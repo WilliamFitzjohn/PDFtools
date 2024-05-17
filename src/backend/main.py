@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from endpoints import router as endpoints_router
+import os
 
 app = FastAPI(
     docs_url=os.environ.get("BASE_URL", "") + "/docs",
