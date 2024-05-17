@@ -10,7 +10,7 @@ router = APIRouter()
 
 @router.get("/ping")
 async def ping():
-    return 'pong'
+    return 'pong!'
 
 @router.post("/merge")
 async def merge_pdfs(files: list[UploadFile] = File(...), filename: str = 'result.pdf'):
