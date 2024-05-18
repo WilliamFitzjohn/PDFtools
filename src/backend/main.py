@@ -5,7 +5,7 @@ import os
 app = FastAPI(
     title="William Fitzjohn's PDFTools",
     description="An API for manipulating PDFs.",
-    version="1.0.0"
+    version="1.0.0",
     docs_url=os.environ.get("BASE_URL", "") + "/docs",
     openapi_url=os.environ.get("BASE_URL", "") + "/openapi.json",
 )

@@ -8,7 +8,7 @@ import os
 router = APIRouter()
 
 
-@router.post("/merge", tags=["PDF Tools"])
+@router.post("/merge", tags=["pdf_tools"])
 async def merge_pdfs(files: list[UploadFile] = File(...), filename: str = 'result.pdf'):
     merger = PdfMerger()
 
