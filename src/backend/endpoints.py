@@ -8,11 +8,7 @@ import os
 router = APIRouter()
 
 
-@router.get("/ping")
-async def ping():
-    return 'pong!'
-
-@router.post("/merge")
+@router.post("/merge", tags=["PDF Tools"])
 async def merge_pdfs(files: list[UploadFile] = File(...), filename: str = 'result.pdf'):
     merger = PdfMerger()
 
@@ -29,3 +25,7 @@ async def merge_pdfs(files: list[UploadFile] = File(...), filename: str = 'resul
     return StreamingResponse(
         fileobj, headers=headers
     )
+
+@router.get("/ping", tags=["utils"])
+async def ping():
+    return 'pong!'

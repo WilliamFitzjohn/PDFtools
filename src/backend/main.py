@@ -3,6 +3,8 @@ from endpoints import router as endpoints_router
 import os
 
 app = FastAPI(
+    title="PDFTools",
+    description="An application for performing PDF operations by William Fitzjohn.",
     docs_url=os.environ.get("BASE_URL", "") + "/docs",
     openapi_url=os.environ.get("BASE_URL", "") + "/openapi.json",
 )
