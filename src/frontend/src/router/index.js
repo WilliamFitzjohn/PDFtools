@@ -1,17 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HelloWorld from '../components/HelloWorld.vue'
-import PdfCombine from '../views/PdfCombine/PdfCombine.vue'
+import HomePage from '../views/home/home.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HelloWorld
-  },
-  {
-    path: '/merge',
-    name: 'View',
-    component: PdfCombine
+    component: HomePage
   }
 ]
 
