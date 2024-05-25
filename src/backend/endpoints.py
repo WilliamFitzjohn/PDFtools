@@ -6,6 +6,7 @@ import sys
 import os
 from PyPDF2 import PdfReader, PdfWriter
 import json
+from pydantic import BaseModel
 
 router = APIRouter()
 
@@ -29,17 +30,21 @@ async def merge_pdfs(files: list[UploadFile] = File(...), filename: str = 'resul
     )
 
 @router.post("/metadata/update", tags=["manipulation"])
-async def update_pdf_metadata(file: UploadFile = File(...), metadata: dict = Body(dict())):
-    # Read the PDF file
-    pdf = PdfReader(file.file)
+async def update_pdf_metadata(file: UploadFile = File(...), metadata: str = Body(...)):
+    # Create a PdfWriter object
+    pdf_reader = PdfReader(file.file)
+    pdf_writer = PdfWriter()
+    pdf_writer.clone_document_from_reader(pdf_reader)
+    
     # Update the metadata
-    pdf.metadata.update(json.loads(metadata))
-    # Create a blank file object
+    pdf_writer.add_metadata(json.loads(metadata))
+    
+    # Create a BytesIO object and write the modified PDF to it
     fileobj = io.BytesIO()
-    # Write the updated PDF to the file object
-    pdf.write(fileobj)
+    pdf_writer.write(fileobj)
+
     # Setting up request
-    headers = {"Content-Disposition": f"attachment; filename={filename.split('.')[:-1]}_updated.pdf"}
+    headers = {"Content-Disposition": f"attachment; filename=updated_{file.filename}"}
     fileobj.seek(0)
     return StreamingResponse(
         fileobj, headers=headers
