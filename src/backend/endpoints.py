@@ -80,6 +80,30 @@ async def analyze_pdf(file: UploadFile = File(...)):
 
     return page_sizes
 
+@router.post("/rotate_pdf", tags=["pdf"])
+async def rotate_pdf(file: UploadFile = File(...), angle: int = 90):
+    # Read the PDF file
+    pdf = PdfReader(file.file)
+
+    # Extract metadata from the original PDF
+    metadata = pdf.metadata
+
+    # Rotate each page
+    writer = PdfWriter()
+    for page in pdf.pages:
+        page.rotate(angle)
+        writer.add_page(page)
+
+    # Set the metadata for the new PDF
+    writer.add_metadata(metadata)
+
+    # Write the rotated pages to a new PDF file
+    fileobj = io.BytesIO()
+    writer.write(fileobj)
+    fileobj.seek(0)
+
+    return StreamingResponse(fileobj, media_type="application/pdf", headers={"Content-Disposition": "attachment; filename=rotated.pdf"})
+
 @router.get("/ping", tags=["utils"])
 async def ping():
     return 'pong!'
